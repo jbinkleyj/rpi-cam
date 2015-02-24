@@ -6,7 +6,7 @@ module.exports = {
 };
 
 function check(fn) {
-  call("which git", {}, function(err) {
+  exec("which git", function(err) {
     if (fn) {
       fn(err);
     }
@@ -14,16 +14,8 @@ function check(fn) {
 }
 
 function still(args, fn) {
-  call("raspistill", args, function(err) {
-    if (fn) {
-      fn(err);
-    }
-  });
-}
-
-function call(cmd, args, fn) {
   args = args || {};
-  exec(build(cmd, args), function(err) {
+  exec(build("raspistill", args), function(err) {
     if (fn) {
       fn(err);
     }
@@ -31,16 +23,12 @@ function call(cmd, args, fn) {
 }
 
 function build(cmd, args) {
-  var str = "";
-
-  str += cmd;
-
+  var str = cmd;
   for (var i in args) {
     str += " " + i;
     if (args[i]) {
       str += " " + args[i];
     }
   }
-
   return str;
 }
