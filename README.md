@@ -1,4 +1,4 @@
-# rpi-cam-wrapper
+# rpi-cam
 
 ## License
 
