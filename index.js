@@ -13,19 +13,34 @@ function check(fn) {
   });
 }
 
-function still(fn) {
-  call("raspistill", {}, function(err) {
+function still(args, fn) {
+  call("raspistill", args, function(err) {
     if (fn) {
       fn(err);
     }
   });
 }
 
-function call(cmd, opts, fn) {
-  opts = opts || {};
-  exec(cmd, function(err) {
+function call(cmd, args, fn) {
+  args = args || {};
+  exec(build(cmd, args), function(err) {
     if (fn) {
       fn(err);
     }
   });
+}
+
+function build(cmd, args) {
+  var str = "";
+
+  str += cmd;
+
+  for (var i in args) {
+    str += " " + i;
+    if (args[i]) {
+      str += " " + args[i];
+    }
+  }
+
+  return str;
 }
