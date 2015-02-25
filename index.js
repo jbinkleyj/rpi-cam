@@ -1,11 +1,11 @@
 var exec = require("child_process").exec;
 
 module.exports = {
-  check: check,
+  exists: exists,
   still: still
 };
 
-function check(fn) {
+function exists(fn) {
   exec("which git", function(err) {
     if (fn) {
       fn(err);
