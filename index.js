@@ -26,11 +26,11 @@ function still(args, fn) {
   var self = this;
   var cmd = buildParams("raspistill", args);
   exec(cmd, function(err) {
-    if (fn) {
-      fn(err);
-    }
     if (!err) {
       self.emit("still");
+    }
+    if (fn) {
+      fn(err);
     }
   });
 }
