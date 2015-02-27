@@ -1,9 +1,18 @@
 var exec = require("child_process").exec;
+var events = require("events");
 
-module.exports = {
+module.exports = Cam;
+
+function Cam() {
+  // ..
+}
+
+Cam.prototype = {
   exists: exists,
   still: still
 };
+
+Cam.prototype.__proto__ = events.EventEmitter.prototype;
 
 function exists(fn) {
   exec("which git", function(err) {
@@ -14,15 +23,19 @@ function exists(fn) {
 }
 
 function still(args, fn) {
-  args = args || {};
-  exec(build("raspistill", args), function(err) {
+  var self = this;
+  var cmd = buildParams("raspistill", args);
+  exec(cmd, function(err) {
     if (fn) {
       fn(err);
+    }
+    if (!err) {
+      self.emit("still");
     }
   });
 }
 
-function build(cmd, args) {
+function buildParams(cmd, args) {
   var str = cmd;
   for (var i in args) {
     str += " " + i;
