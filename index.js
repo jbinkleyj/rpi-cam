@@ -15,7 +15,7 @@ Cam.prototype = {
 Cam.prototype.__proto__ = events.EventEmitter.prototype;
 
 function exists(fn) {
-  exec("which git", function(err) {
+  exec("which raspistill", function(err) {
     if (fn) {
       fn(err);
     }
